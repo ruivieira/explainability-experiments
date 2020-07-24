@@ -1,4 +1,7 @@
-lime
-pandas
+matplotlib
+nyoka
 numpy
-lightgbm
+pandas
+seaborn
+sklearn
+sklearn_pandas
