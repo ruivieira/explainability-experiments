@@ -1,4 +1,4 @@
-package dev.ruivieira.counterfactual;
+package dev.ruivieira.counterfactual.models;
 
 import com.redhat.developer.model.Value;
 import com.redhat.developer.model.*;
