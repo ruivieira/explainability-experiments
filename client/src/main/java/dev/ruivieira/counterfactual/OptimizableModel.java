@@ -26,27 +26,37 @@ public class OptimizableModel implements MultivariateFunction {
     private final Feature goal;
     private PointValuePair optimum;
 
+    private final double step;
+    private final double[] initialGuess;
+    private final double lambda;
+
     public PointValuePair getOptimum() {
         return optimum;
     }
 
     public OptimizableModel(List<FeatureType> featureTypes, Model model, Feature goal) {
+        this(featureTypes, model, goal, 1.0, 0.2);
+    }
+
+    public OptimizableModel(List<FeatureType> featureTypes, Model model, Feature goal, double lambda, double step) {
         this.featureTypes = featureTypes;
         this.N = featureTypes.size();
         this.model = model;
         this.goal = goal;
+        this.step = step;
+        this.lambda = lambda;
 
         // build optimizer
         SimplexOptimizer optimizer = new SimplexOptimizer(1e-10, 1e-30);
 
         // build initial points
-        final double[] initialGuess = featureTypes.stream()
+        this.initialGuess = featureTypes.stream()
                 .filter(featureType -> !featureType.isConstrained())
                 .map(featureType -> featureType.getValue().asNumber())
                 .mapToDouble(Double::doubleValue)
                 .toArray();
         final double[] steps = Arrays
-                .stream(initialGuess).map(x -> 0.2)
+                .stream(this.initialGuess).map(x -> this.step)
                 .toArray();
 
         System.out.println(Arrays.toString(initialGuess));
@@ -59,6 +69,13 @@ public class OptimizableModel implements MultivariateFunction {
                         GoalType.MINIMIZE,
                         new InitialGuess(initialGuess),
                         new NelderMeadSimplex(steps));
+    }
+
+    private double[] featureToArray(List<Feature> features) {
+        return features.stream()
+                .map(f -> f.getValue().asNumber())
+                .mapToDouble(Double::doubleValue)
+                .toArray();
     }
 
     private List<Feature> buildFeatures(double[] values) {
@@ -104,7 +121,11 @@ public class OptimizableModel implements MultivariateFunction {
 
         final List<PredictionOutput> predictions = model.predict(inputs);
 
-        return Math.abs(this.goal.getValue().asNumber() - predictions.get(0).getOutputs().get(0).getValue().asNumber());
+        final double predictionDistance = Math.pow(this.goal.getValue().asNumber() - predictions.get(0).getOutputs().get(0).getValue().asNumber(), 2);
+
+        final double inputDistance = Measures.manhattan(initialGuess, featureToArray(features));
+
+        return lambda * predictionDistance + inputDistance;
     }
 
   public static void main(String[] args) throws JAXBException, SAXException, IOException {
@@ -123,7 +144,7 @@ public class OptimizableModel implements MultivariateFunction {
 
       final Feature goal = FeatureFactory.newNumericalFeature("bmi", 25.0);
 
-      OptimizableModel optimizer = new OptimizableModel(context, model, goal);
+      OptimizableModel optimizer = new OptimizableModel(context, model, goal, 1.0, 0.2);
 
       System.out.println(optimizer.getCounterfactual());
   }
