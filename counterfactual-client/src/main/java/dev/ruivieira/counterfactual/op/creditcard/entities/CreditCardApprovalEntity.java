@@ -1,4 +1,4 @@
-package dev.ruivieira.counterfactual.op.creditcard;
+package dev.ruivieira.counterfactual.op.creditcard.entities;
 
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;

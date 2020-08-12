@@ -1,13 +1,13 @@
-package dev.ruivieira.counterfactual.op.creditcard;
+package dev.ruivieira.counterfactual.op.creditcard.solution;
 
-import dev.ruivieira.counterfactual.op.bmi.BMIEntity;
+import dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.valuerange.ValueRange;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
-import org.optaplanner.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDecimalScore;
+import org.optaplanner.core.api.score.buildin.bendablebigdecimal.BendableBigDecimalScore;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,18 +15,10 @@ import java.util.List;
 import java.util.Random;
 
 @PlanningSolution
-public class CreditCardApprovalSolution {
-    List<CreditCardApprovalEntity> creditCardApprovals = new ArrayList<>();
-    List<Integer> ages = new ArrayList<>();
-    List<Integer> incomes = new ArrayList<>();
-    List<Integer> children = new ArrayList<>();
-    List<Integer> daysEmployed = new ArrayList<>();
-    List<Boolean> ownRealties = new ArrayList<>();
-    List<Boolean> workPhones = new ArrayList<>();
-    List<Boolean> ownCards = new ArrayList<>();
-    private HardSoftBigDecimalScore score;
+public class CreditCardApprovalBendableSolution  extends AbstractCreditCardApprovalSolution {
+    private BendableBigDecimalScore score;
 
-    public CreditCardApprovalSolution() {
+    public CreditCardApprovalBendableSolution() {
         CreditCardApprovalEntity approval = new CreditCardApprovalEntity();
         approval.setAge(getAgesList().createRandomIterator(new Random()).next());
         approval.setIncome(getIncomeList().createRandomIterator(new Random()).next());
@@ -85,12 +77,12 @@ public class CreditCardApprovalSolution {
         return facts;
     }
 
-    @PlanningScore
-    public HardSoftBigDecimalScore getScore() {
+    @PlanningScore(bendableHardLevelsSize = 1, bendableSoftLevelsSize = 2)
+    public BendableBigDecimalScore getScore() {
         return score;
     }
 
-    public void setScore(HardSoftBigDecimalScore score) {
+    public void setScore(BendableBigDecimalScore score) {
         this.score = score;
     }
 

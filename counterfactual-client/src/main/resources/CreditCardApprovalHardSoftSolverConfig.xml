@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <solver>
-    <solutionClass>dev.ruivieira.counterfactual.op.creditcard.CreditCardApprovalSolution</solutionClass>
-    <entityClass>dev.ruivieira.counterfactual.op.creditcard.CreditCardApprovalEntity</entityClass>
+    <solutionClass>dev.ruivieira.counterfactual.op.creditcard.solution.CreditCardApprovalHardSoftSolution</solutionClass>
+    <entityClass>dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity</entityClass>
     <scoreDirectorFactory>
-        <easyScoreCalculatorClass>dev.ruivieira.counterfactual.op.creditcard.CreditCardApprovalEasyScoreCalculator</easyScoreCalculatorClass>
+        <easyScoreCalculatorClass>dev.ruivieira.counterfactual.op.creditcard.scoring.CreditCardApprovalHardSoftScoreCalculator</easyScoreCalculatorClass>
         <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>
     </scoreDirectorFactory>
     <localSearch>
