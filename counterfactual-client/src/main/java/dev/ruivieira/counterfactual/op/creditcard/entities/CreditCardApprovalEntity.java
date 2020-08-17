@@ -1,11 +1,16 @@
 package dev.ruivieira.counterfactual.op.creditcard.entities;
 
+import com.redhat.developer.model.Feature;
+import com.redhat.developer.model.FeatureFactory;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @PlanningEntity
 public class CreditCardApprovalEntity {
-  private Integer age;
+  private Double age;
   private Integer income;
   private Integer children;
   private Integer daysEmployed;
@@ -16,13 +21,13 @@ public class CreditCardApprovalEntity {
   public CreditCardApprovalEntity() {}
 
   public CreditCardApprovalEntity(
-      Integer age,
-      Integer income,
-      Integer children,
-      Integer daysEmployed,
-      Boolean ownRealty,
-      Boolean workPhone,
-      Boolean ownCar) {
+          Double age,
+          Integer income,
+          Integer children,
+          Integer daysEmployed,
+          Boolean ownRealty,
+          Boolean workPhone,
+          Boolean ownCar) {
     this.age = age;
     this.income = income;
     this.children = children;
@@ -33,11 +38,11 @@ public class CreditCardApprovalEntity {
   }
 
   @PlanningVariable(valueRangeProviderRefs = {"ageRange"})
-  public Integer getAge() {
+  public Double getAge() {
     return age;
   }
 
-  public void setAge(Integer age) {
+  public void setAge(Double age) {
     this.age = age;
   }
 
@@ -106,5 +111,25 @@ public class CreditCardApprovalEntity {
             ", workPhone=" + workPhone +
             ", ownCar=" + ownCar +
             '}';
+  }
+
+  public List<Feature> buildFeatures() {
+    final List<Feature> context = new ArrayList<>();
+    final Feature age = FeatureFactory.newNumericalFeature("age", this.getAge());
+    final Feature income = FeatureFactory.newNumericalFeature("income", this.getIncome());
+    final Feature children = FeatureFactory.newNumericalFeature("children", this.getChildren());
+    final Feature daysEmployed = FeatureFactory.newNumericalFeature("daysEmployed", this.getDaysEmployed());
+    final Feature ownRealty = FeatureFactory.newNumericalFeature("ownRealty", this.getOwnRealty() ? 1 : 0);
+    final Feature workPhone = FeatureFactory.newNumericalFeature("workPhone", this.getWorkPhone() ? 1 : 0);
+    final Feature ownCar = FeatureFactory.newNumericalFeature("ownCar", this.getOwnCar() ? 1 : 0);
+
+    context.add(income);
+    context.add(children);
+    context.add(daysEmployed);
+    context.add(age);
+    context.add(ownCar);
+    context.add(ownRealty);
+    context.add(workPhone);
+    return context;
   }
 }

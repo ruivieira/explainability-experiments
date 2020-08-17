@@ -12,22 +12,13 @@ import org.optaplanner.core.api.score.buildin.bendablebigdecimal.BendableBigDeci
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 @PlanningSolution
 public class CreditCardApprovalBendableSolution  extends AbstractCreditCardApprovalSolution {
     private BendableBigDecimalScore score;
 
     public CreditCardApprovalBendableSolution() {
-        CreditCardApprovalEntity approval = new CreditCardApprovalEntity();
-        approval.setAge(getAgesList().createRandomIterator(new Random()).next());
-        approval.setIncome(getIncomeList().createRandomIterator(new Random()).next());
-        approval.setChildren(getChildrenList().createRandomIterator(new Random()).next());
-        approval.setDaysEmployed(getDayEmployedList().createRandomIterator(new Random()).next());
-        approval.setOwnRealty(getOwnRealtyList().createRandomIterator(new Random()).next());
-        approval.setWorkPhone(getWorkPhoneList().createRandomIterator(new Random()).next());
-        approval.setOwnCar(getOwnCarList().createRandomIterator(new Random()).next());
-        creditCardApprovals.add(approval);
+        super();
     }
 
     @PlanningEntityCollectionProperty
@@ -36,8 +27,8 @@ public class CreditCardApprovalBendableSolution  extends AbstractCreditCardAppro
     }
 
     @ValueRangeProvider(id = "ageRange")
-    public ValueRange<Integer> getAgesList() {
-        return ValueRangeFactory.createIntValueRange(16, 60);
+    public ValueRange<Double> getAgesList() {
+        return ValueRangeFactory.createDoubleValueRange(18.0, 60.0);
     }
 
     @ValueRangeProvider(id = "incomeRange")
@@ -77,7 +68,7 @@ public class CreditCardApprovalBendableSolution  extends AbstractCreditCardAppro
         return facts;
     }
 
-    @PlanningScore(bendableHardLevelsSize = 1, bendableSoftLevelsSize = 2)
+    @PlanningScore(bendableHardLevelsSize = 2, bendableSoftLevelsSize = 1)
     public BendableBigDecimalScore getScore() {
         return score;
     }

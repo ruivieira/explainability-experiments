@@ -70,32 +70,10 @@ public class CreditCardApprovalHardSoftCounterfactual implements LocalExplainer<
   }
 
   public static void main(String[] args) throws JAXBException, SAXException, IOException {
-    final List<Feature> context = new ArrayList<>();
 
-//    final Feature age = FeatureFactory.newNumericalFeature("age", 25);
-//    final Feature income = FeatureFactory.newNumericalFeature("income", 40000);
-//    final Feature children = FeatureFactory.newNumericalFeature("children", 3);
-//    final Feature daysEmployed = FeatureFactory.newNumericalFeature("daysEmployed", 100);
-//    final Feature ownRealty = FeatureFactory.newNumericalFeature("ownRealty", 0);
-//    final Feature workPhone = FeatureFactory.newNumericalFeature("workPhone", 0);
-//    final Feature ownCar = FeatureFactory.newNumericalFeature("ownCar", 0);
+    CreditCardApprovalEntity entity = new CreditCardApprovalEntity(30.0, 5000, 0, 100, true, true, true);
 
-    final Feature age = FeatureFactory.newNumericalFeature("age", 39);
-    final Feature income = FeatureFactory.newNumericalFeature("income", 200000);
-    final Feature children = FeatureFactory.newNumericalFeature("children", 0);
-    final Feature daysEmployed = FeatureFactory.newNumericalFeature("daysEmployed", 1000);
-    final Feature ownRealty = FeatureFactory.newNumericalFeature("ownRealty", 1);
-    final Feature workPhone = FeatureFactory.newNumericalFeature("workPhone", 1);
-    final Feature ownCar = FeatureFactory.newNumericalFeature("ownCar", 1);
-
-
-    context.add(age);
-    context.add(income);
-    context.add(children);
-    context.add(daysEmployed);
-    context.add(ownRealty);
-    context.add(workPhone);
-    context.add(ownCar);
+    final List<Feature> context = entity.buildFeatures();
 
     final Feature goal = FeatureFactory.newNumericalFeature("APPROVED", 1.0);
 
@@ -118,7 +96,6 @@ public class CreditCardApprovalHardSoftCounterfactual implements LocalExplainer<
     outputs = model.predict(inputs);
     output = outputs.get(0);
     System.out.println("Original: " + output.getOutputs().get(0).getValue());
-
 
   }
 

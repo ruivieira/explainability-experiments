@@ -8,11 +8,12 @@ import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 
 public class AbstractCreditCardApprovalSolution {
     protected final List<CreditCardApprovalEntity> creditCardApprovals = new ArrayList<>();
-    private final List<Integer> ages = new ArrayList<>();
+    private final List<Double> ages = new ArrayList<>();
     private final List<Integer> incomes = new ArrayList<>();
     private final List<Integer> children = new ArrayList<>();
     private final List<Integer> daysEmployed = new ArrayList<>();
@@ -20,9 +21,21 @@ public class AbstractCreditCardApprovalSolution {
     private final List<Boolean> workPhones = new ArrayList<>();
     private final List<Boolean> ownCards = new ArrayList<>();
 
+    public AbstractCreditCardApprovalSolution() {
+        CreditCardApprovalEntity approval = new CreditCardApprovalEntity();
+        approval.setAge(getAgesList().createRandomIterator(new Random()).next());
+        approval.setIncome(getIncomeList().createRandomIterator(new Random()).next());
+        approval.setChildren(getChildrenList().createRandomIterator(new Random()).next());
+        approval.setDaysEmployed(getDayEmployedList().createRandomIterator(new Random()).next());
+        approval.setOwnRealty(getOwnRealtyList().createRandomIterator(new Random()).next());
+        approval.setWorkPhone(getWorkPhoneList().createRandomIterator(new Random()).next());
+        approval.setOwnCar(getOwnCarList().createRandomIterator(new Random()).next());
+        creditCardApprovals.add(approval);
+    }
+
     @ValueRangeProvider(id = "ageRange")
-    public ValueRange<Integer> getAgesList() {
-        return ValueRangeFactory.createIntValueRange(16, 60);
+    public ValueRange<Double> getAgesList() {
+        return ValueRangeFactory.createDoubleValueRange(16.0, 60.0);
     }
 
     @ValueRangeProvider(id = "incomeRange")

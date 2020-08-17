@@ -1,7 +1,5 @@
 package dev.ruivieira.counterfactual.op.creditcard.scoring;
 
-import com.redhat.developer.model.Feature;
-import com.redhat.developer.model.FeatureFactory;
 import com.redhat.developer.model.Model;
 import com.redhat.developer.model.PredictionInput;
 import dev.ruivieira.counterfactual.models.CreditCardApprovalModel;
@@ -92,34 +90,8 @@ public abstract class AbstractCreditCardApprovalScoreCalculator {
     }
 
     protected List<PredictionInput> buildPredictionInputs(CreditCardApprovalEntity entity) {
-        final List<Feature> features = new ArrayList<>();
-
-        final Feature age = FeatureFactory.newNumericalFeature("AGE", entity.getAge().doubleValue());
-        final Feature income =
-                FeatureFactory.newNumericalFeature("AMT_INCOME_TOTAL", entity.getIncome().doubleValue());
-        final Feature children =
-                FeatureFactory.newNumericalFeature("CNT_CHILDREN", entity.getChildren().doubleValue());
-        final Feature daysEmployed =
-                FeatureFactory.newNumericalFeature("DAYS_EMPLOYED", entity.getDaysEmployed().doubleValue());
-        final Feature ownRealty =
-                FeatureFactory.newNumericalFeature(
-                        "FLAG_OWN_REALTY", entity.getOwnRealty() ? 1 : 0);
-        final Feature workPhone =
-                FeatureFactory.newNumericalFeature(
-                        "FLAG_WORK_PHONE", entity.getWorkPhone() ? 1 : 0);
-        final Feature ownCar =
-                FeatureFactory.newNumericalFeature("FLAG_OWN_CAR", entity.getOwnCar() ? 1 : 0);
-
-        features.add(children);
-        features.add(daysEmployed);
-        features.add(age);
-        features.add(income);
-        features.add(workPhone);
-        features.add(ownRealty);
-        features.add(ownCar);
-
         final List<PredictionInput> inputs = new ArrayList<>();
-        inputs.add(new PredictionInput(features));
+        inputs.add(new PredictionInput(entity.buildFeatures()));
         return inputs;
     }
 

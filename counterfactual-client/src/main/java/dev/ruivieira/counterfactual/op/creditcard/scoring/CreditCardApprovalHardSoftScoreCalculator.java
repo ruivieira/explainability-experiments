@@ -20,35 +20,39 @@ public class CreditCardApprovalHardSoftScoreCalculator extends AbstractCreditCar
 
   public HardSoftBigDecimalScore calculateScore(CreditCardApprovalHardSoftSolution solution) {
 
-    final CreditCardApprovalEntity approvalEntity = solution.getApprovalsList().get(0);
-
-    final List<PredictionInput> inputs = buildPredictionInputs(approvalEntity);
-
-    final List<PredictionOutput> predictions = getModel().predict(inputs);
-
-    final double[] inputData = buildInputArray();
-
-    final double[] solutionData = buildSolutionData(approvalEntity);
-
-    final double inputDistance = Math.pow(Measures.manhattan(inputData, solutionData), 2.0);
-
     double hardScore = 0.0;
+    double softScore = 0.0;
 
-    final Output output = predictions.get(0).getOutputs().get(0);
+    for (CreditCardApprovalEntity entity : solution.getApprovalsList()) {
+      final List<PredictionInput> inputs = buildPredictionInputs(entity);
 
-    if (output.getValue().asNumber() != 1.0) {
-      hardScore -= 1;
+      final List<PredictionOutput> predictions = getModel().predict(inputs);
+
+      final double[] inputData = buildInputArray();
+
+      final double[] solutionData = buildSolutionData(entity);
+
+      final double inputDistance = Math.pow(Measures.manhattan(inputData, solutionData), 2.0);
+
+      softScore -= inputDistance;
+
+      final Output output = predictions.get(0).getOutputs().get(0);
+
+      if (output.getValue().asNumber() != 1.0) {
+        hardScore -= 1;
+      }
+
+      logger.debug("Input distance: " + inputDistance);
+      logger.debug("Hardscore distance: " + hardScore);
+      logger.debug("age = {}, income = {}, children = {}, days = {}, realties = {}, phone = {}, car = {}",
+              entity.getAge(), entity.getIncome(), entity.getChildren(), entity.getDaysEmployed(),
+              entity.getOwnRealty(), entity.getWorkPhone(), entity.getOwnCar());
+
     }
-
-    logger.debug("Input distance: " + inputDistance);
-    logger.debug("Hardscore distance: " + hardScore);
-    logger.debug("age = {}, income = {}, children = {}, days = {}, realties = {}, phone = {}, car = {}",
-            approvalEntity.getAge(), approvalEntity.getIncome(), approvalEntity.getChildren(), approvalEntity.getDaysEmployed(),
-            approvalEntity.getOwnRealty(), approvalEntity.getWorkPhone(), approvalEntity.getOwnCar());
 
     return HardSoftBigDecimalScore.of(
             BigDecimal.valueOf(hardScore),
-            BigDecimal.valueOf(-inputDistance));
+            BigDecimal.valueOf(softScore));
 
   }
 }

@@ -12,7 +12,6 @@ import org.optaplanner.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDeci
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 @PlanningSolution
 public class CreditCardApprovalHardSoftSolution extends AbstractCreditCardApprovalSolution {
@@ -20,20 +19,12 @@ public class CreditCardApprovalHardSoftSolution extends AbstractCreditCardApprov
   private HardSoftBigDecimalScore score;
 
   public CreditCardApprovalHardSoftSolution() {
-    CreditCardApprovalEntity approval = new CreditCardApprovalEntity();
-    approval.setAge(getAgesList().createRandomIterator(new Random()).next());
-    approval.setIncome(getIncomeList().createRandomIterator(new Random()).next());
-    approval.setChildren(getChildrenList().createRandomIterator(new Random()).next());
-    approval.setDaysEmployed(getDayEmployedList().createRandomIterator(new Random()).next());
-    approval.setOwnRealty(getOwnRealtyList().createRandomIterator(new Random()).next());
-    approval.setWorkPhone(getWorkPhoneList().createRandomIterator(new Random()).next());
-    approval.setOwnCar(getOwnCarList().createRandomIterator(new Random()).next());
-    getApprovalsList().add(approval);
+    super();
   }
 
   @ValueRangeProvider(id = "ageRange")
-  public ValueRange<Integer> getAgesList() {
-    return ValueRangeFactory.createIntValueRange(20, 55);
+  public ValueRange<Double> getAgesList() {
+    return ValueRangeFactory.createDoubleValueRange(16.0, 60.0);
   }
 
   @ValueRangeProvider(id = "incomeRange")

@@ -1,7 +1,7 @@
 package dev.ruivieira.counterfactual.op.creditcard;
 
-import com.redhat.developer.model.*;
-import com.redhat.developer.xai.LocalExplainer;
+import com.redhat.developer.model.Feature;
+import com.redhat.developer.model.FeatureFactory;
 import dev.ruivieira.counterfactual.CounterfactualUtils;
 import dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity;
 import dev.ruivieira.counterfactual.op.creditcard.solution.CreditCardApprovalBendableSolution;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CreditCardApprovalBendableCounterfactual implements LocalExplainer<Counterfactual> {
+public class CreditCardApprovalBendableCounterfactual {
   public static final String SOLVER_CONFIG_XML = "CreditCardApprovalBendableSolverConfig.xml";
   private static final Logger LOGGER = Logger.getLogger(CreditCardApprovalBendableCounterfactual.class.getName());
   private final Feature goal;
@@ -66,24 +66,9 @@ public class CreditCardApprovalBendableCounterfactual implements LocalExplainer<
   }
 
   public static void main(String[] args) {
-    final List<Feature> context = new ArrayList<>();
+    CreditCardApprovalEntity entity = new CreditCardApprovalEntity(30.0, 5000, 0, 100, true, true, true);
 
-    final Feature age = FeatureFactory.newNumericalFeature("age", 51);
-    final Feature income = FeatureFactory.newNumericalFeature("income", 40000);
-    final Feature children = FeatureFactory.newNumericalFeature("children", 0);
-    final Feature daysEmployed = FeatureFactory.newNumericalFeature("daysEmployed", 900);
-    final Feature ownRealty = FeatureFactory.newNumericalFeature("ownRealty", 0);
-    final Feature workPhone = FeatureFactory.newNumericalFeature("workPhone", 0);
-    final Feature ownCar = FeatureFactory.newNumericalFeature("ownCar", 0);
-
-
-    context.add(age);
-    context.add(income);
-    context.add(children);
-    context.add(daysEmployed);
-    context.add(ownRealty);
-    context.add(workPhone);
-    context.add(ownCar);
+    final List<Feature> context = entity.buildFeatures();
 
     final Feature goal = FeatureFactory.newNumericalFeature("APPROVED", 1.0);
 
@@ -100,8 +85,4 @@ public class CreditCardApprovalBendableCounterfactual implements LocalExplainer<
     return solution;
   }
 
-  @Override
-  public Counterfactual explain(Prediction prediction, Model model) {
-    return null;
-  }
 }
