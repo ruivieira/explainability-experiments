@@ -1,5 +1,6 @@
 package dev.ruivieira.counterfactual.op.creditcard.scoring;
 
+import com.redhat.developer.model.Output;
 import com.redhat.developer.model.PredictionInput;
 import com.redhat.developer.model.PredictionOutput;
 import dev.ruivieira.counterfactual.Measures;
@@ -35,16 +36,18 @@ public class CreditCardApprovalBendableScoreCalculator extends AbstractCreditCar
 
       final double inputDistance = Math.pow(Measures.manhattan(inputData, solutionData), 2.0);
 
-      if (predictions.get(0).getOutputs().get(0).getValue().asNumber() != 1.0) {
+      final Output output = predictions.get(0).getOutputs().get(0);
+
+      if (output.getValue().asNumber() != 1.0) {
         hardScore -= 1;
       }
 
       softScore -= inputDistance;
 
-      if (entity.getAge() != this.getAge().intValue()) {
+      if (!entity.getAge().equals(this.getAge())) {
         changedParameters -= 1;
       }
-      if (entity.getChildren() != this.getChildren().intValue()) {
+      if (!entity.getChildren().equals(this.getChildren())) {
         changedParameters -= 1;
       }
 

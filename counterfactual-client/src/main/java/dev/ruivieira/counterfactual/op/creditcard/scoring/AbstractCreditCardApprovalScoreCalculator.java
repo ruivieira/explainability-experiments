@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class AbstractCreditCardApprovalScoreCalculator {
     private Double age;
     private Double income;
-    private Double children;
+    private Integer children;
     private Double daysEmployed;
     private Integer ownRealty;
     private Integer workPhone;
@@ -45,11 +45,11 @@ public abstract class AbstractCreditCardApprovalScoreCalculator {
         this.income = income;
     }
 
-    public Double getChildren() {
+    public Integer getChildren() {
         return children;
     }
 
-    public void setChildren(Double children) {
+    public void setChildren(Integer children) {
         this.children = children;
     }
 
