@@ -11,7 +11,7 @@
             <secondsSpentLimit>30</secondsSpentLimit>
         </termination>
         <acceptor>
-            <entityTabuSize>7</entityTabuSize>
+            <entityTabuSize>70</entityTabuSize>
         </acceptor>
         <forager>
             <acceptedCountLimit>5000</acceptedCountLimit>
