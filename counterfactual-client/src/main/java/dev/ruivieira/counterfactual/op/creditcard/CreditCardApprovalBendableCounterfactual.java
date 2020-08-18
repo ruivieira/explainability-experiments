@@ -18,23 +18,25 @@ import java.util.logging.Logger;
 public class CreditCardApprovalBendableCounterfactual {
   public static final String SOLVER_CONFIG_XML = "CreditCardApprovalBendableSolverConfig.xml";
   private static final Logger LOGGER = Logger.getLogger(CreditCardApprovalBendableCounterfactual.class.getName());
-  private final Feature goal;
-  private final CreditCardApprovalEntity solution;
+
+  protected final CreditCardApprovalEntity solution;
+  protected final Feature goal;
+
   private List<Feature> counterfactual;
 
   public CreditCardApprovalBendableCounterfactual(List<Feature> context, Feature goal) {
     this.goal = goal;
-    SolverConfig solverConfig = SolverConfig.createFromXmlResource(SOLVER_CONFIG_XML);
 
     Map<String, String> contextMap = new HashMap<>();
 
-//    contextMap.put(goal.getName(), goal.getValue().asString());
+    //    contextMap.put(goal.getName(), goal.getValue().asString());
 
     for (Feature feature : context) {
       contextMap.put(feature.getName(), feature.getValue().asString());
     }
-
+    SolverConfig solverConfig = SolverConfig.createFromXmlResource(SOLVER_CONFIG_XML);
     solverConfig.getScoreDirectorFactoryConfig().setEasyScoreCalculatorCustomProperties(contextMap);
+
 
     final SolverFactory<CreditCardApprovalBendableSolution> solverFactory = SolverFactory.create(solverConfig);
 

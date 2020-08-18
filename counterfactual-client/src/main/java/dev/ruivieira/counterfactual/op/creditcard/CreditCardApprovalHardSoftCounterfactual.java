@@ -1,7 +1,9 @@
 package dev.ruivieira.counterfactual.op.creditcard;
 
-import com.redhat.developer.model.*;
-import com.redhat.developer.xai.LocalExplainer;
+import com.redhat.developer.model.Feature;
+import com.redhat.developer.model.FeatureFactory;
+import com.redhat.developer.model.PredictionInput;
+import com.redhat.developer.model.PredictionOutput;
 import dev.ruivieira.counterfactual.CounterfactualUtils;
 import dev.ruivieira.counterfactual.models.CreditCardApprovalModel;
 import dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CreditCardApprovalHardSoftCounterfactual implements LocalExplainer<Counterfactual> {
+public class CreditCardApprovalHardSoftCounterfactual {
   public static final String SOLVER_CONFIG_XML = "CreditCardApprovalHardSoftSolverConfig.xml";
   private static final Logger LOGGER = Logger.getLogger(CreditCardApprovalHardSoftCounterfactual.class.getName());
   private final Feature goal;
@@ -107,8 +109,4 @@ public class CreditCardApprovalHardSoftCounterfactual implements LocalExplainer<
     return solution;
   }
 
-  @Override
-  public Counterfactual explain(Prediction prediction, Model model) {
-    return null;
-  }
 }
