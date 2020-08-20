@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class CreditCardApprovalBendableCounterfactual {
-  public static final String SOLVER_CONFIG_XML = "CreditCardApprovalBendableSolverConfig.xml";
-  private static final Logger LOGGER = Logger.getLogger(CreditCardApprovalBendableCounterfactual.class.getName());
+  //  public static final String SOLVER_CONFIG_XML = "CreditCardApprovalBendableSolverConfig.xml";
+  public static final String SOLVER_CONFIG_XML = "CCAClosestMoveBendableSolverConfig.xml";
+//  public static final String SOLVER_CONFIG_XML = "CCAFilteredMoveBendableSolverConfig.xml";
 
   protected final CreditCardApprovalEntity solution;
   protected final Feature goal;

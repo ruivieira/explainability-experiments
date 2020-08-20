@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <solutionClass>dev.ruivieira.counterfactual.op.creditcard.solution.CreditCardApprovalBendableSolution</solutionClass>
+    <entityClass>dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity</entityClass>
+    <scoreDirectorFactory>
+        <easyScoreCalculatorClass>dev.ruivieira.counterfactual.op.creditcard.scoring.CreditCardApprovalBendableScoreCalculator</easyScoreCalculatorClass>
+<!--        <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>-->
+    </scoreDirectorFactory>
+    <localSearch>
+        <changeMoveSelector>
+            <entitySelector>
+                <filterClass>dev.ruivieira.counterfactual.op.creditcard.filters.OnlyApprovedFilter</filterClass>
+            </entitySelector>
+        </changeMoveSelector>
+        <termination>
+            <secondsSpentLimit>30</secondsSpentLimit>
+        </termination>
+        <acceptor>
+            <entityTabuSize>70</entityTabuSize>
+        </acceptor>
+        <forager>
+            <acceptedCountLimit>5000</acceptedCountLimit>
+        </forager>
+    </localSearch>
+</solver>

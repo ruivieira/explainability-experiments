@@ -1,7 +1,6 @@
 package dev.ruivieira.counterfactual.op.creditcard.scoring;
 
 import com.redhat.developer.model.Output;
-import com.redhat.developer.model.PredictionInput;
 import com.redhat.developer.model.PredictionOutput;
 import dev.ruivieira.counterfactual.Measures;
 import dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity;
@@ -24,9 +23,8 @@ public class CreditCardApprovalHardSoftScoreCalculator extends AbstractCreditCar
     double softScore = 0.0;
 
     for (CreditCardApprovalEntity entity : solution.getApprovalsList()) {
-      final List<PredictionInput> inputs = buildPredictionInputs(entity);
 
-      final List<PredictionOutput> predictions = getModel().predict(inputs);
+      final List<PredictionOutput> predictions = getModel().predict(entity);
 
       final double[] inputData = buildInputArray();
 

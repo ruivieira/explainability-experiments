@@ -2,6 +2,7 @@ package dev.ruivieira.counterfactual.models;
 
 import com.redhat.developer.model.Value;
 import com.redhat.developer.model.*;
+import dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity;
 import org.dmg.pmml.FieldName;
 import org.jpmml.evaluator.*;
 import org.xml.sax.SAXException;
@@ -115,5 +116,11 @@ public class CreditCardApprovalModel implements Model {
   @Override
   public PredictionOutput getOutputShape() {
     return null;
+  }
+
+  public List<PredictionOutput> predict(CreditCardApprovalEntity entity) {
+    final List<PredictionInput> inputs = new ArrayList<>();
+    inputs.add(new PredictionInput(entity.buildFeatures()));
+    return predict(inputs);
   }
 }

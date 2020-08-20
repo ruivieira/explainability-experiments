@@ -1,6 +1,5 @@
 package dev.ruivieira.counterfactual.op.creditcard.scoring;
 
-import com.redhat.developer.model.Model;
 import com.redhat.developer.model.PredictionInput;
 import dev.ruivieira.counterfactual.models.CreditCardApprovalModel;
 import dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity;
@@ -19,7 +18,7 @@ public abstract class AbstractCreditCardApprovalScoreCalculator {
     private Integer ownRealty;
     private Integer workPhone;
     private Integer ownCar;
-    private Model model;
+    private CreditCardApprovalModel model;
 
     public AbstractCreditCardApprovalScoreCalculator() {
         try {
@@ -85,7 +84,7 @@ public abstract class AbstractCreditCardApprovalScoreCalculator {
         this.ownCar = ownCar;
     }
 
-    public Model getModel() {
+    public CreditCardApprovalModel getModel() {
         return model;
     }
 

@@ -8,7 +8,9 @@
     </scoreDirectorFactory>
     <localSearch>
         <termination>
-            <secondsSpentLimit>30</secondsSpentLimit>
+            <secondsSpentLimit>5</secondsSpentLimit>
+<!--            <bestScoreLimit>[0/0]hard/[-1000]soft</bestScoreLimit>-->
+<!--            <stepCountLimit>100</stepCountLimit>-->
         </termination>
         <acceptor>
             <entityTabuSize>70</entityTabuSize>
