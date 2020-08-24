@@ -7,18 +7,18 @@
 <!--        <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>-->
     </scoreDirectorFactory>
     <localSearch>
-        <changeMoveSelector>
-            <entitySelector id="entitySelector1">
-                <entityClass>dev.ruivieira.counterfactual.op.creditcard.entities.CreditCardApprovalEntity</entityClass>
-            </entitySelector>
-            <valueSelector>
-                <nearbySelection>
-                    <originEntitySelector mimicSelectorRef="entitySelector1"/>
-                    <nearbyDistanceMeterClass>dev.ruivieira.counterfactual.op.creditcard.moves.FeatureDistanceMeter</nearbyDistanceMeterClass>
-                    <parabolicDistributionSizeMaximum>40</parabolicDistributionSizeMaximum>
-                </nearbySelection>
-            </valueSelector>
-        </changeMoveSelector>
+        <unionMoveSelector>
+            <changeMoveSelector>
+                <entitySelector id="entitySelector1"/>
+                <valueSelector>
+                    <nearbySelection>
+                        <originEntitySelector mimicSelectorRef="entitySelector1"/>
+                        <nearbyDistanceMeterClass>dev.ruivieira.counterfactual.op.creditcard.moves.FeatureDistanceMeter</nearbyDistanceMeterClass>
+                        <parabolicDistributionSizeMaximum>40</parabolicDistributionSizeMaximum>
+                    </nearbySelection>
+                </valueSelector>
+            </changeMoveSelector>
+        </unionMoveSelector>
         <termination>
             <secondsSpentLimit>5</secondsSpentLimit>
         </termination>
