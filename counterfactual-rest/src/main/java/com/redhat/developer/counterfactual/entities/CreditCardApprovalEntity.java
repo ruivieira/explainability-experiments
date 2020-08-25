@@ -21,13 +21,13 @@ public class CreditCardApprovalEntity {
   public CreditCardApprovalEntity() {}
 
   public CreditCardApprovalEntity(
-          Double age,
-          Integer income,
-          Integer children,
-          Integer daysEmployed,
-          Boolean ownRealty,
-          Boolean workPhone,
-          Boolean ownCar) {
+      Double age,
+      Integer income,
+      Integer children,
+      Integer daysEmployed,
+      Boolean ownRealty,
+      Boolean workPhone,
+      Boolean ownCar) {
     this.age = age;
     this.income = income;
     this.children = children;
@@ -102,15 +102,22 @@ public class CreditCardApprovalEntity {
 
   @Override
   public String toString() {
-    return "CreditCardApprovalEntity{" +
-            "age=" + age +
-            ", income=" + income +
-            ", children=" + children +
-            ", daysEmployed=" + daysEmployed +
-            ", ownRealty=" + ownRealty +
-            ", workPhone=" + workPhone +
-            ", ownCar=" + ownCar +
-            '}';
+    return "CreditCardApprovalEntity{"
+        + "age="
+        + age
+        + ", income="
+        + income
+        + ", children="
+        + children
+        + ", daysEmployed="
+        + daysEmployed
+        + ", ownRealty="
+        + ownRealty
+        + ", workPhone="
+        + workPhone
+        + ", ownCar="
+        + ownCar
+        + '}';
   }
 
   public List<Feature> buildFeatures() {
@@ -118,9 +125,12 @@ public class CreditCardApprovalEntity {
     final Feature age = FeatureFactory.newNumericalFeature("age", this.getAge());
     final Feature income = FeatureFactory.newNumericalFeature("income", this.getIncome());
     final Feature children = FeatureFactory.newNumericalFeature("children", this.getChildren());
-    final Feature daysEmployed = FeatureFactory.newNumericalFeature("daysEmployed", this.getDaysEmployed());
-    final Feature ownRealty = FeatureFactory.newNumericalFeature("ownRealty", this.getOwnRealty() ? 1 : 0);
-    final Feature workPhone = FeatureFactory.newNumericalFeature("workPhone", this.getWorkPhone() ? 1 : 0);
+    final Feature daysEmployed =
+        FeatureFactory.newNumericalFeature("daysEmployed", this.getDaysEmployed());
+    final Feature ownRealty =
+        FeatureFactory.newNumericalFeature("ownRealty", this.getOwnRealty() ? 1 : 0);
+    final Feature workPhone =
+        FeatureFactory.newNumericalFeature("workPhone", this.getWorkPhone() ? 1 : 0);
     final Feature ownCar = FeatureFactory.newNumericalFeature("ownCar", this.getOwnCar() ? 1 : 0);
 
     context.add(income);
