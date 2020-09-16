@@ -56,7 +56,7 @@ public class DoubleFeature implements CounterfactualEntity {
 
     @Override
     public double distance() {
-        return this.value - this.feature.getValue().asNumber();
+        return Math.abs(this.value - this.feature.getValue().asNumber());
     }
 
     @Override
