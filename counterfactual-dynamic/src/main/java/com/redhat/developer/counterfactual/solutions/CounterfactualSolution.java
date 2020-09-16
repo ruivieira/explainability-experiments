@@ -30,42 +30,48 @@ import java.util.List;
 @PlanningSolution
 public class CounterfactualSolution {
 
-  @PlanningEntityCollectionProperty public List<CounterfactualEntity> entities;
+    @PlanningEntityCollectionProperty
+    private List<CounterfactualEntity> entities;
 
-  @JsonIgnore
-  private Feature goal;
+    @JsonIgnore
+    private Feature goal;
 
-  @JsonIgnore
-  private Model model;
+    @JsonIgnore
+    private Model model;
 
-  private BendableBigDecimalScore score;
+    private BendableBigDecimalScore score;
 
-  protected CounterfactualSolution() {
-  }
+    protected CounterfactualSolution() {
+    }
 
-  public CounterfactualSolution(
-          List<CounterfactualEntity> entities,
-          Model model,
-          Feature goal) {
-    this.entities = entities;
-    this.model = model;
-    this.goal = goal;
+    public CounterfactualSolution(
+            List<CounterfactualEntity> entities,
+            Model model,
+            Feature goal) {
+        this.entities = entities;
+        this.model = model;
+        this.goal = goal;
 
-  }
-  @PlanningScore(bendableHardLevelsSize = 2, bendableSoftLevelsSize = 1)
-  public BendableBigDecimalScore getScore() {
-    return score;
-  }
+    }
 
-  public void setScore(BendableBigDecimalScore score) {
-    this.score = score;
-  }
+    @PlanningScore(bendableHardLevelsSize = 2, bendableSoftLevelsSize = 1)
+    public BendableBigDecimalScore getScore() {
+        return score;
+    }
 
-  public Model getModel() {
-    return model;
-  }
+    public void setScore(BendableBigDecimalScore score) {
+        this.score = score;
+    }
 
-  public Feature getGoal() {
-    return goal;
-  }
+    public Model getModel() {
+        return model;
+    }
+
+    public Feature getGoal() {
+        return goal;
+    }
+
+    public List<CounterfactualEntity> getEntities() {
+        return entities;
+    }
 }

@@ -44,7 +44,7 @@ public class CounterFactualScoreCalculator implements EasyScoreCalculator<Counte
 
         StringBuilder builder = new StringBuilder();
 
-        for (CounterfactualEntity entity : solution.entities) {
+        for (CounterfactualEntity entity : solution.getEntities()) {
             primarySoftScore += entity.distance();
             final Feature f = entity.asFeature();
             builder.append(f.getName()).append("=").append(f.getValue().getUnderlyingObject()).append("(d: ").append(entity.distance()).append("),");
@@ -57,7 +57,7 @@ public class CounterFactualScoreCalculator implements EasyScoreCalculator<Counte
 
         logger.info(builder.toString());
 
-        List<Feature> input = solution.entities.stream().map(CounterfactualEntity::asFeature).collect(Collectors.toList());
+        List<Feature> input = solution.getEntities().stream().map(CounterfactualEntity::asFeature).collect(Collectors.toList());
 
         Feature prediction = solution.getModel().predict(input);
 

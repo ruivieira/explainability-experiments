@@ -68,7 +68,7 @@ public class Example {
         }
 
         System.out.println("The counterfactual is:");
-        for (CounterfactualEntity cfEntity : solution.entities) {
+        for (CounterfactualEntity cfEntity : solution.getEntities()) {
             System.out.println(cfEntity.asFeature().toString());
         }
     }
