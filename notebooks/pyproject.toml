@@ -7,6 +7,7 @@ authors = ["Rui Vieira <ruidevieira@googlemail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 ghp-import = "^1.0.0"
+jupyterlab = "^2.2.9"
 
 [tool.poetry.dev-dependencies]
 

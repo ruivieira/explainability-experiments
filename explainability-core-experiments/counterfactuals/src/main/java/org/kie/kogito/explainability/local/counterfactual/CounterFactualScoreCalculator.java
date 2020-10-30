@@ -99,7 +99,7 @@ public class CounterFactualScoreCalculator implements EasyScoreCalculator<Counte
             List<PredictionOutput> predictions = predictionAsync.get();
             final double distance = predictionDistance(predictions, solution.getGoal());
             primaryHardScore -= distance;
-            logger.info("Penalise outcome (output: {})", distance);
+            logger.debug("Penalise outcome (output: {})", distance);
 
         } catch (InterruptedException | ExecutionException e) {
             logger.error("Impossible to obtain prediction {}", e.getMessage());
