@@ -4,7 +4,15 @@ REST server to generate counterfactuals for a credit card approval predict model
 
 ## Usage
 
-Build and start the counterfactual REST server:
+Before using this server, you might need to install the counterfactual search engine available on the [TrustyAI sandbox](https://github.com/kiegroup/trusty-ai-sandbox).
+Simply clone the repository and run
+
+```
+$ cd trustyai-sandbox/explainability/core/counterfactuals
+$ mvn clean install
+```
+
+Then, for this repository, build and start the counterfactual REST server:
 
 ```
 $ mvn clean package
@@ -15,18 +23,32 @@ $ java -jar target/counterfactual-op-1.0.0-SNAPSHOT-runner.jar
 
 Predict a credit card approval with:
 
-```
+```json
 curl --request POST \
   --url http://0.0.0.0:8080/creditcard/prediction \
-  --header 'content-type: application/json' \
+  --header 'Content-Type: application/json' \
   --data '{
-	"age": 18,
-	"income": 0,
-	"children": 2,
-	"daysEmployed": 0,
-	"ownRealty": false,
-	"workPhone": true,
-	"ownCar": false
+		"age": {
+			"value": 20
+		},
+		"income": {
+			"value": 50000
+		},
+		"children": {
+			"value": 0
+		},
+		"daysEmployed": {
+			"value": 100
+		},
+		"ownRealty": {
+			"value": false
+		},
+		"workPhone": {
+			"value": true
+		},
+		"ownCar": {
+			"value": true
+		}
 }'
 ```
 
@@ -34,36 +56,60 @@ curl --request POST \
 
 Calculate the counterfactual using:
 
-```
+```json
 curl --request POST \
   --url http://0.0.0.0:8080/creditcard/counterfactual \
-  --header 'content-type: application/json' \
+  --header 'Content-Type: application/json' \
   --data '{
-	"age": 20,
-	"income": 30000,
-	"children": 0,
-	"daysEmployed": 100,
-	"ownRealty": false,
-	"workPhone": true,
-	"ownCar": false
+	"input": {
+		"age": {
+			"value": 20,
+			"constrain": true,
+			"min": 18,
+			"max": 100
+		},
+		"income": {
+			"value": 50000,
+			"min": 0,
+			"max": 1000000
+		},
+		"children": {
+			"value": 0,
+			"constrain": true,
+			"min": 0,
+			"max": 20
+		},
+		"daysEmployed": {
+			"value": 100,
+			"min": 0,
+			"max": 10000
+		},
+		"ownRealty": {
+			"value": false
+		},
+		"workPhone": {
+			"value": true
+		},
+		"ownCar": {
+			"value": true
+		}
+	},
+	"goal": {
+		"output": {
+			"approved": true,
+			"confidence": 0.0
+		}
+	}
 }'
 ```
 
-### Score
+The minimum confidence level can be customised using:
 
-Explain OptaPlanner's counterfactual score using:
-
-```
-curl --request POST \
-  --url http://0.0.0.0:8080/creditcard/breakdown \
-  --header 'content-type: application/json' \
-  --data '{
-	"age": 20,
-	"income": 30000,
-	"children": 0,
-	"daysEmployed": 100,
-	"ownRealty": false,
-	"workPhone": true,
-	"ownCar": false
-}'
+```json
+"goal": {
+    "output": {
+        "approved": true,
+        "confidence": 0.7
+    }
+}
 ```
